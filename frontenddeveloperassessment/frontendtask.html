@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Front End Developer Task</title>
+    <style>
+        *{padding: 0;margin: 0;box-sizing: border-box;}
+        body{font-family: Verdana, Geneva, Tahoma, sans-serif;height:100%;width:100%;display:flex;justify-content: center;align-items: center;}
+        .containerCls{position:relative;width:1152px;height: 720px;background-image: url('bg-cover.png');background-position: center;background-size: cover;background-repeat: no-repeat;}
+	    .upperSection{position:relative;width:auto;height:20%;}
+        .header{position:relative;width:auto;padding:15px 10px;text-indent: 10px;}
+        .header::before{position: absolute;content:"";left: 0;top:0;width:10px;height:100%;background-color: black;z-index:1;}
+        .headerElement{font-size:25px;width:100%;color:black;}
+        .description{position:relative;font-size:16px;width:75%;padding:15px 10px;}
+        .lowersectionCls{position: relative;height:80%;}
+        .imageSlidesContainerCls{position: relative;display: flex;justify-content:space-around;align-items: center;width:auto;height:100%;padding:0px 10px;}
+        .imageContainer{position: relative;width:33%;height:60%;display: flex;flex-direction: column;justify-content:start;align-items: center;transition: all 0.5s;}
+        .imageContainer:hover{cursor: pointer;}
+        .imageContainer > * {pointer-events: none;transition: all 0.5s;}
+        .wheelimages{position: relative;height:60%;}
+        .contentDescription{position: relative;display: flex;flex-direction: column;justify-content: center;align-items: center;}
+        .contentDescription > p {text-align: center;}
+        .wheelName{position: relative;font-weight: bold;font-size:14px;}
+        .additonal{font-size: 14px;}
+        .abbrevation{font-weight: bold;font: optional;font-size: 16px;}
+        .element {position: relative;	height: 96%;	width: 33%;	justify-content: center;
+	    align-items: center;	background-image: url('wheel-bg.jpg');	background-position: center;
+	    background-repeat: no-repeat;	background-size: cover;	padding-bottom:8%;display:flex;border:2px solid #e0e0e0;border-radius: 5px;transition: all 0.5s;}
+	.leftarrow{
+	height: 30px;
+	position: absolute;
+	top: 50%;
+	left: 0%;
+	font-size: 30px;
+	cursor:pointer;
+}
+.rightarrow {
+	height: 30px;
+	position: absolute;
+	top: 50%;
+	right: 0%;
+	font-size: 30px;
+	cursor:pointer;
+}
+        </style>
+</head>
+<body>
+    <div class="containerCls">
+        <section class="upperSection">
+            <div class="header">
+                <p class="headerElement">WHEELS</p>
+            </div>
+            <p class="description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam cum rerum laborum accusantium porro? Voluptate veniam accusantium adipisci mollitia.
+            </p>
+        </section>
+        <section class="lowersectionCls">
+            <div class="imageSlidesContainerCls">
+                <div class="imageContainer" id="one">
+                    <img src="wgu.png" alt="wheelimage" class="wheelimages">
+                    <div class="contentDescription">
+                        <p class="wheelName">17- INCH CAST ALUMINIUM WHEEL, FULLY PAINTED SILVER LITHO</p>
+                        <p class="addtitonal">Standard on Touring FWD</p>
+                        <p class="abbrevation">(WGU)</p>
+                    </div>
+                </div>
+                <div class="imageContainer" id="two">
+                    <img src="wjr.png" alt="wheelimage" class="wheelimages">
+                    <div class="contentDescription">
+                        <p class="wheelName">17- INCH CAST ALUMINIUM DIAMOND CUT WITH BALTIC GRAY POCKETS</p>
+                        <p class="addtitonal">Standard on Touring L FWD/Hybrid and Touring Hybrid</p>
+                        <p class="abbrevation">(WJR)</p>
+                    </div>
+                </div>
+                <div class="imageContainer" id="three">
+                    <img src="wp6.png" alt="wheelimage" class="wheelimages">
+                    <div class="contentDescription">
+                        <p class="wheelName">18- INCH CAST ALUMINIUM WHEEL WITH FORESHADOW FINISH</p>
+                        <p class="addtitonal">included with S Appearance Package on Touring Hybrid, Touring L Hybrid and Limited Hybrid</p>
+                        <p class="abbrevation">(WP6)</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <span class="leftarrow" id="leftslide" >&#10094;</span>
+	<span class="rightarrow" id="rightslide">&#10095;</span>
+    </div>
+<script>
+	let imageContainers = document.querySelectorAll('.imageContainer');
+    let leftarrow = document.getElementById('leftslide');
+    let rightarrow =document.getElementById('rightslide');
+    let firstcontainer = document.getElementById('one');
+    let secondcontainer = document.getElementById('two');
+    let thirdcontainer = document.getElementById('three');
+	for(let i=0;i<imageContainers.length;i++){
+   	imageContainers[i].addEventListener('click',function(event){
+          var divElement = event.target;
+          //divElement.classList.remove('imageContainer');
+           divElement.classList.add('element');
+          //divElement.classList.toggle('element');
+        if(i==0){
+		    imageContainers[1].classList.remove('element');
+	        imageContainers[2].classList.remove('element');
+            leftarrow.style.display="none";
+            rightarrow.style.display="";
+
+	    }
+         if(i==1){
+		    imageContainers[0].classList.remove('element');
+	        imageContainers[2].classList.remove('element');
+            leftarrow.style.display="";
+            rightarrow.style.display="";  
+        }
+	    if(i==2){
+		    imageContainers[0].classList.remove('element');
+	        imageContainers[1].classList.remove('element');
+            leftarrow.style.display="";
+            rightarrow.style.display="none";
+	    }
+    });
+};
+    
+    leftarrow.addEventListener('click',()=>{
+        let containerforimg = document.getElementsByClassName('element');
+        console.log(containerforimg);
+        if(containerforimg.length >0){
+            let elementvariable =containerforimg[0].previousElementSibling;
+            console.log(elementvariable);
+            console.log(elementvariable.id);
+            containerforimg[0].classList.remove('element');
+            elementvariable.classList.add('element');
+            rightarrow.style.display="";
+            leftarrow.style.display = "";
+            if(containerforimg[0].getAttribute('id')=='one'){
+                leftarrow.style.display="none";
+            }
+        }
+    });
+    
+    rightarrow.addEventListener('click',()=>{
+        let containerforimg = document.getElementsByClassName('element');
+        console.log(containerforimg);
+        if(containerforimg.length == 0){
+            firstcontainer.classList.add('element');
+            leftarrow.style.display = "none";
+        }
+        else{
+            containerforimg[0].nextElementSibling.classList.add('element');
+            containerforimg[0].classList.remove('element');
+            rightarrow.style.display="";
+            leftarrow.style.display = "";
+            if(containerforimg[0].getAttribute('id')=='three'){
+                rightarrow.style.display="none";
+            }
+        }
+    });
+</script>
+</body>
+</html>
