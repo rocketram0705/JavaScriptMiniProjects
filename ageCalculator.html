@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Know the Age of a Name</title>
+    <style>
+        *{margin: 0px;padding: 0px;box-sizing:border-box;}
+        body{height:100Vh;width:100vw;font-family: 'Courier New', Courier, monospace;}
+        .mainContainerCls{position:relative;height:100%;width: 100%;}
+        .entryformContainerCls{position:relative;height: 50%;display: flex;flex-direction: column;justify-content: center;align-items: center;background-color: aliceblue;}
+        .outputContainerCls{position: relative;height: 50%;display: flex;flex-direction: column;justify-content: center;align-items: center;background-color: aqua;}
+        .fieldContainerCls{position: relative;width:40%;height:30px;display:flex;justify-content: center;align-items: center;margin: 5px;}
+        .labelCls{position: relative;width: 30%;height: 100%;}
+        input{position: relative;width: 60%;height: 100%;}
+        .btn{position:relative;height:30px;color: black;padding:0px 15px;background-color:#4285f4;font-size:16px;font-weight: 600;border-radius:10px;outline: none;border: none;}
+        .btn:hover{background-color: green;color: white;}  
+        .FeedDetails{margin:10px auto;} 
+        .outputFeedHeader{margin: 10px auto;color:#fff;}
+        </style>
+</head>
+<body>
+    <div class="mainContainerCls">
+        <div class="entryformContainerCls">
+            <h1 class="FeedDetails">Feed Your Details Here</h1>
+            <div class="fieldContainerCls">
+                <label for="name" class="labelCls">Name</label>
+                <input type="text" name="name" id="name">
+            </div>
+            <div class="fieldContainerCls">
+                <label for="country" class="labelCls">Country</label>
+                <input type="text" name="country" id="country">
+            </div>
+            <div class="fieldContainerCls">
+                <button id="btnSubmit" class="btn">Submit</button>
+            </div>
+        </div>
+        <div class="outputContainerCls">
+            <h1 class="outputFeedHeader">Your Info Will be Shown Below</h1>
+            <h2 id="ageId" class="agecls">No information Available</h2>
+            <h6 id="count" class="countCls">No Count Here</h6>
+            <h4 class="countryIdCls" id="countryId">No country Available</h4>
+            <h5 id="nameOfPerson" class="nameCls">Name not Feeded</h5>
+        </div>
+    </div>
+	<script>
+        const button = document.getElementById("btnSubmit");
+       //const button = document.querySelector('#btnSubmit');
+        const ageOfName = document.getElementById('ageId');
+        const count = document.getElementById('count');
+        const countryid= document.getElementById('countryId');
+        const nameOfPerson = document.getElementById('nameOfPerson');
+        button.addEventListener('click',showAge);
+        function showAge(){
+            let name;
+            let countryName;
+            const PersonName =document.getElementById('name');
+            const country=document.getElementById('country');
+            //console.log(PersonName.value +"  "+country.value);
+            name = PersonName.value;
+            console.log(name);
+            countryName = country.value;
+            console.log(countryName);
+            getAgeInfo(name,countryName);
+        }
+        function getAgeInfo(name,countryName){
+            if(!countryName){
+                let url = `https://api.agify.io?name=${name}`;
+                fetch(url).then((response)=>{
+                    return response.json();
+                }).then((data)=>{
+                    //console.log(data);
+                    const ageOfPerson = data.age;
+                    const countOfData = data.count;
+                    const nameOfMan = data.name;
+                    ageOfName.textContent=ageOfPerson;
+                    count.textContent=countOfData;
+                    countryid.style.display="none";
+                    nameOfPerson.textContent = nameOfMan.toUpperCase();
+                    document.getElementById('name').value = '';
+                    document.getElementById('country').value='';
+                });
+            }
+            else{
+                let url =`https://api.agify.io?name=${name}&country_id=${countryName}`;
+                fetch(url).then((response)=>{
+                    return response.json();
+                }).then((data)=>{
+                    console.log(data);
+                    const ageOfPerson = data.age;
+                    const countOfData = data.count;
+                    const country = data.country_id;
+                    const nameOfMan = data.name;
+                    ageOfName.textContent=ageOfPerson;
+                    count.textContent=countOfData;
+                    countryid.textContent =country;
+                    nameOfPerson.textContent = nameOfMan.toUpperCase();
+                    document.getElementById('name').value = '';
+                    document.getElementById('country').value='';
+                });
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Canvs Demo</title>
+</head>
+<body>
+    <canvas id="democanvas" style="height: 300px; width:300px; border:1px solid black;"></canvas>
+    <script>
+        let canva = document.getElementById('democanvas');
+        let context = canva.getContext('2d');
+        // context.fillStyle= 'green';
+        // context.fillRect(20,20,150,100);
+        // context.fillRect(180,20,50,100);
+        // context.font = 'bold 18px serif';
+        // context.fillText("R",20,20);
+        // context.fillText("A",38,10);
+        // context.fillText("J",56,20);
+        // context.fillText("E",72,10);
+        // context.fillText("S",90,20);
+        // context.fillText("H",108,10);
+        context.strokeStyle = 'green';
+        context.font = "bold 24px sans-serif";
+        context.textAlign = 'center';
+        context.textBaseline = 'middle';
+        context.strokeText("Hello World",canva.width/2,canva.height/2);
+        context.fillStyle="red";
+        context.fillRect(50,80,100,50);
+    </script>
+</body>
+</html>

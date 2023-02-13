@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="fontawesome-free-6.1.1-web/css/all.min.css">
+    <style>
+        * {margin:0px; padding: 0px;box-sizing: border-box;}
+        html,body{height: 100%;width: 100%;display: flex;justify-content: center;align-items: center;background-color:#4a98f7;}
+        .wrapper{display: flex; flex-direction:column;justify-content: center;align-items: center;background: #fff;width: 440px;padding: 30px 30px 38px;border-radius: 20px;}
+        .wrapper i {max-width: 103px;}
+        .wrapper h1{font-size: 30px; font-weight: 500;margin:30px 0px;}
+        .wrapper .content{width: 100;border:1px solid whitesmoke; display:flex;justify-content:space-around;}
+        .content .column{width:calc(100/3 -5px);padding: 0px 20px;border: 1px solid #000;border-radius: 5px;}
+        .column select{outline: none;border: none;height: 53px;}
+        .wrapper button{width: 100%;margin-top: 20px;font-size: 20px;border: none;padding:17px 0; border-radius: 5px;background-color: #4a98f7;}
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+        <i class="fas fa-alarm-clock fa-xs "></i>
+        <h1 id="currenttime"></h1>
+        <div class="content">
+            <div class="column">
+                <select name="" id="">
+                    <option value="Hour" selected hidden>Hour</option>
+                </select>
+            </div>
+            <div class="column">
+                <select name="" id="">
+                    <option value="Minute" selected hidden>Minute</option>
+                </select>
+            </div>      
+            <div class="column">
+                <select name="" id="">
+                    <option value="AM/PM" selected default>AM/PM</option>
+                    <option value="AM">AM</option>
+                    <option value="PM">PM</option>
+                </select>
+            </div>      
+        </div>
+        <button id="click">Set Alarm</button>
+    </div>
+    <script>
+        const selectMenu = document.querySelectorAll("select");
+        setInterval(() => {
+            var date = new Date();
+            document.getElementById("currenttime").innerText = date.toLocaleTimeString();
+        }, 1000);
+        for (let i =12; i > 0; i--) {
+           // i = i < 10 ? "0"+i : i;
+            let option = `<option value="${i}">${i}</option>`;
+            selectMenu[0].firstElementChild.insertAdjacentHTML("afterend",option);
+        }
+        for (let i =60; i>0; i--) {
+            i =i < 10 ? "0"+i : i;
+            let option = `<option value="${i}">${i}</option>`;
+            selectMenu[1].firstElementChild.insertAdjacentHTML("afterend",option);         
+        }
+        alarmIsOn = false;
+        var Alarm = document.getElementById("click");
+        Alarm.addEventListener("click",setAlarm);
+        function setAlarm(){
+            if (alarmIsOn == true){
+                alarmIsOn=false;
+                window.location.reload();
+            }
+            var alarmHours =selectMenu[0].value;
+            var alarmMinutes =selectMenu[1].value;
+            var alarmAm_PM=selectMenu[2].value;
+            alert(alarmHours+"  "+alarmMinutes+" "+alarmAm_PM);
+            if(alarmHours!=="Hour"||alarmMinutes!=="Minute"){
+                    var alarmTime =alarmHours+":"+alarmMinutes+":"+"00"+" "+alarmAm_PM;
+                    Alarm.innerText = "Alarm is Set";
+                    Alarm.style.backgroundColor = "red";
+                    Alarm.style.color="white";
+                    setInterval(() => {
+                    var date = new Date();
+                    var currentTime = document.getElementById("currenttime");
+                    currentTime.innerText = date.toLocaleTimeString();
+                    var actualTime = currentTime.innerText;
+                    if(actualTime === alarmTime){
+                        alert("alarm goes off!");
+                        alarmIsOn = true;
+                    }
+                }, 1000);
+            }
+            else{
+                alert("please check the time....set properly....");
+            }          
+        }
+        
+    </script>
+</body>
+</html>

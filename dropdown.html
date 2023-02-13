@@ -1,0 +1,45 @@
+<html>
+<head>
+<title>
+demo for Onchange eventListener
+</title>
+<style>
+.containerCls{height:50px; width:200px;border:1px solid black;}
+#countryOfBirth{width:130px;height:20px;}
+input,label{margin-top:1%;}
+</style>
+</head>
+<body>
+<div class="containerCls">
+<label for="country">Country</label>
+<select name="country" id="countryOfBirth">
+<!-- <option value="select" selected >select</option> -->  
+</select>
+<label for="countryname">Name</label>
+<input type="text" name="countryname" id="countryName" list="countryDataList"> 
+</div>
+  <script>
+    const countryList = ['India','Pakistan','China','Sri Lanka','Maldivs','Bangladesh'];
+    function createDataList(){
+        let dataListElement = document.createElement('datalist');
+        dataListElement.setAttribute('id','countryDataList');
+        countryList.forEach(list => {
+            //console.log(list);
+            let optionElement = document.createElement('option');
+            optionElement.value=list;
+            dataListElement.appendChild(optionElement);
+        });
+        countryName.appendChild(dataListElement);
+    }
+    window.addEventListener('load',createDataList);
+    countryName.addEventListener('input',function(evt){
+        console.log((evt.detail));
+        console.log(evt);
+        console.log(evt.inputType);
+        if(evt.inputType == "insertReplacementText" || evt.inputType == null ){
+            alert(countryName.value);
+        }
+    });
+  </script>
+</body>
+</html>

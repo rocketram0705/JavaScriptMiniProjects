@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cureved Text</title>
+    <style>
+        #imgProfileImageContainer{position:fixed;height: 120px;width:120px;border:1px solid blue;border-radius:50%;z-index:100;left: 50%;transform: translateX(-50%);top:30px;background: transparent;}
+        #headContainerId{position: fixed;height:160px;width: 160px;border: 1px solid black;left: 50%;transform: translateX(-50%);}
+    </style>
+</head>
+<body>
+    <div id="headContainerId">
+        <canvas id="canvas" style="position:relative;width:100%;height:100%; background:skyblue;"></canvas>
+    </div>
+    <div id="imgProfileImageContainer"></div>
+    <script>
+        let canvas = document.getElementById('canvas');
+        let ctx = canvas.getContext('2d');
+        ctx.beginPath();
+        ctx.arc(canvas.width/2,canvas.height/2,70,0*Math.PI,2*Math.PI);
+        ctx.stroke();
+    </script>
+</body>
+</html>

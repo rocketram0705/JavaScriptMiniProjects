@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ajax Demonstration</title>
+</head>
+<body>
+    <button id="clickButton">click me</button>
+    <script>
+        document.getElementById('clickButton').addEventListener('click',getTextFile);
+       /* function getTextFile(){
+            // creating xmlhttprequeset object....
+            let xhrObject = new XMLHttpRequest();
+           // console.log(xhrObject);
+            xhrObject.open('GET','sample.txt',true);
+        
+              200 = OK,
+              403 = forbidden,
+              404 = not found
+
+            xhrObject.onload = function(){
+                if (xhrObject.status== 200){
+                    console.log(xhrObject.responseText);
+                }
+            }
+            xhrObject.send();
+        }*/
+        function getTextFile(){
+            let xhr = new XMLHttpRequest();
+            xhr.open('GET','sample.txt',true);
+            console.log("Ready State: "+xhr.readyState);
+            xhr.onreadystatechange = function(){
+                console.log("Ready State: "+xhr.readyState);
+                if(this.readyState== 4 && this.status == 200){
+
+                }
+            }
+            xhr.send();
+        }
+    </script>
+</body>
+</html>

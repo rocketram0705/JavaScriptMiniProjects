@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{margin:0px; padding: 0px; box-sizing: border-box;  font-family:sans-serif;}
+        body{display: flex;align-items: center;justify-content: center;min-height: 100vh;background-color: #1bb295;}
+        .wrapper{width:430px;background-color: #fff;border-radius: 10px;position: relative;}
+        .wrapper h1{font-size: 25px; font-weight: 500;padding: 20px 25px;border-bottom: 1px solid #ccc;}
+        .wrapper .content{margin:25px 25px 35px}
+        .content .inputs{display: flex;justify-content: center;flex-wrap: wrap;}
+        .inputs input{height: 55px; width: 55px;margin:1%;font-size: 24px;font-weight: 500;text-align: center;color: black;background: none;}
+        .inputs input:first-child{margin-left: 0px;}
+        .content .details{margin: 20px 0px 25px;}
+        .content .details p {font-size: 16px;margin-bottom: 10px;}
+        .reset-btn{width: 100%;outline: none;cursor: pointer;border: none;font-size: 17px;color: #fff;padding:15px 0 ;background-color: #1bb295;border-radius: 10px;}
+        </style>
+</head>
+<body>
+    <div class="wrapper">
+        <h1>Guess the word</h1>
+        <div class="typing-input">
+            <input type="text" id="playerInput" placeholder="answer" maxlength="1">
+        </div>
+        <div class="content">
+            <div class="inputs">
+            </div>
+            <div class="details">
+                <p class="hint">Hint: <span>Hint will be shown here</span></p>
+                <p class="guess-left">Remaining guesses: <span></span></p>
+                <p class="wrong-letter">Wrong letters: <span></span></p>
+            </div>
+            <button class="reset-btn">Reset Game</button>
+        </div>
+    </div>
+    <script>
+        const wordlist =[
+            {
+                word:"fox",
+                hint:"animal notorious for trickery"
+            },
+            {
+                word:"lion",
+                hint:"King of the jungle"
+            },
+            {
+                word:"monkey",
+                hint:"it has a long tail,jumps tree to tree"
+            },
+            {
+                word:"camel",
+                hint:"dezzert people's friend"
+            },
+            {
+                word:"dog",
+                hint:"it barks loudly"
+            },
+            {
+                word:"cat",
+                hint:"steals and drinks milk a lot"
+            },
+            {
+                word:"sparrow",
+                hint:"little bird, second half of famous fictious pirate name"
+            },
+            {
+                word:"parrot",
+                hint:"green color beautiful bird"
+            },
+            {
+                word:"owl",
+                hint:"bird roams only in night"
+            },
+            {
+                word:"bear",
+                hint:"animal has fictious name of baloo"
+            },
+            {
+                word:"tiger",
+                hint:"India's national animal"
+            },
+            {
+                word:"cobra",
+                hint:"voicios snake "
+            },
+            {
+                word:"pen",
+                hint:"used to write in notebook"
+            },
+            {
+                word:"delete",
+                hint:"key use to erase a word"
+            },
+            {
+                word:"escape",
+                hint:"keyboard char associated with roshini"
+            },
+            {
+                word:"bow",
+                hint:"associated with arrow"
+            },
+            {
+                word:"crow",
+                hint:"relatives visits you when they crows"
+            }
+        ];
+        const inputs = document.querySelector(".inputs");
+        const resetButton=document.querySelector(".reset-btn");
+        const hint= document.querySelector(".hint span");
+        var palyerinput = document.getElementById("playerInput");
+        var wrongletter = document.querySelector(".wrong-letter span");
+        var guessleft = document.querySelector(".guess-left span");
+        var word;
+        var guesses=10;
+        var correctWords="";
+        function randomword(){
+            const ranObj= wordlist[Math.floor(Math.random()* wordlist.length)];
+            word = ranObj.word;
+            console.log(word);
+            hint.innerText = ranObj.hint;
+            let html = "";
+            for(let i=0; i<word.length;i++){
+                html += '<input type="text" >';
+            }
+            inputs.innerHTML=html;
+        }
+        randomword();
+        function getTheValue(){
+            const inputElements = document.querySelectorAll(".inputs input");
+            var letter = palyerinput.value;
+                for(let i=0;i<word.length;i++){
+                    if(word[i] === letter){
+                        inputElements[i].value =letter;
+                        palyerinput.value = "";
+                        correctWords += letter;
+                        if(correctWords.length == word.length){
+                            alert("congrats you have won!!"+" "+word);
+                            correctWords="";
+                            guesses=10;
+                            wrongletter.innerText="";
+                            guessleft.innerText="";
+                            palyerinput.value = "";
+                            randomword();
+                        }
+                    }
+                    else if(!word.includes(letter)){
+                        guesses--;
+                        wrongletter.innerText += " "+letter;
+                        guessleft.innerText= guesses;
+                        palyerinput.value="";
+                        if(guesses < 1){
+                            alert("game over!!! the right answer is"+" "+word);
+                            correctWords="";
+                            guesses=10;
+                            palyerinput.value = "";
+                            wrongletter.innerText="";
+                            guessleft.innerText="";
+                            randomword();
+                        }
+                        break;
+                    }
+                    else{
+                    }
+            }           
+        } 
+        resetButton.addEventListener("click", randomword);       
+        palyerinput.addEventListener("keydown",getTheValue);
+    </script>
+</body>
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>java script demo</title>
+    <!--<script src="script.js"></script> -->
+    <script src="objects.js"></script>
+    <style>
+        *{margin: 0%;padding: 0%;}
+        .containerCls{height: 90px;width: 90px;border:1px solid black;position: absolute;top:50%;left: 50%;transform: translate(-50%,-50%);display: flex;align-items: center;justify-content: center;}
+        .tab{position: relative;height: 90%;width: 90%;display: flex;flex-direction: column;justify-content: center;align-items: center;clip-path: circle(45px);background-color: #cee7ce;}
+        img{position: relative;height: 30px;width: 30px;}
+        .description{color: black;font-family: Arial, Helvetica, sans-serif;font-size: 1rem;font-weight: bold;}
+        .testcls{position: relative; display: block;height: 30px;width: 50px;}
+        #clickme{position: relative;height: 50px;width:auto; padding: 1em; background-color:aquamarine;}
+    </style>
+</head>
+<body>
+   <div class="containerCls" onmouseover="addSpecialEffect(this,'in')" onmouseout="addSpecialEffect(this,'out')">
+    <div class="tab">
+        <img src="images\user_b.png" alt="">
+        <label for="" class="description">user</label>
+    </div>
+   </div>
+</body>
+</html>
