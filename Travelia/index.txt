@@ -23,8 +23,6 @@ Sign Up
 aria-label = open menu
 <ion-icon name="menu-outline" aria-hidden="true"></ion-icon>
 
-
-
 #---------- HERO ----------#
 
 Explore the World
