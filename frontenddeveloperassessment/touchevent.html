@@ -19,7 +19,7 @@
         .imageContainer{position: relative;width:33%;height:60%;display: flex;flex-direction: column;justify-content:start;align-items: center;transition: all 0.5s;}
         .imageContainer:hover{cursor: pointer;}
         .imageContainer > * {pointer-events: none;transition: all 0.5s;}
-        .wheelimages{position: relative;height:60%;}
+        .wheelimages{position: relative;height:50%;}
         .contentDescription{position: relative;display: flex;flex-direction: column;justify-content: center;align-items: center;}
         .contentDescription > p {text-align: center;}
         .wheelName{position: relative;font-weight: bold;font-size:14px;}
@@ -34,6 +34,7 @@
 	top: 50%;
 	left: 0%;
 	font-size: 30px;
+    transform:translateY(-50%);
 	cursor:pointer;
 }
 .rightarrow {
@@ -41,6 +42,7 @@
 	position: absolute;
 	top: 50%;
 	right: 0%;
+    transform: translateY(-50%);
 	font-size: 30px;
 	cursor:pointer;
 }
@@ -49,11 +51,11 @@
     .containerCls{width:100%;height: auto;}
     .upperSection{height: auto;}
     .description{width: auto;}
-    .lowersectionCls{height: 500px;}
-    .imageSlidesContainerCls{height: 100%;display: block;overflow: hidden;}
-    .imageContainer{width:auto;height:100%;}
-
-
+    .lowersectionCls{height: 500px;position: relative;}
+    .imageSlidesContainerCls{height: 100%;overflow: hidden;}
+    .imageContainer{width:auto;height:100%;display: none;}
+    .imageContainer.active{display:flex !important;}
+    .leftarrow{display:none;}
 }
 </style>
 </head>
@@ -68,7 +70,7 @@
         </section>
         <section class="lowersectionCls">
             <div class="imageSlidesContainerCls">
-                <div class="imageContainer" id="one">
+                <div class="imageContainer active" id="one">
                     <img src="wgu.png" alt="wheelimage" class="wheelimages">
                     <div class="contentDescription">
                         <p class="wheelName">17- INCH CAST ALUMINIUM WHEEL, FULLY PAINTED SILVER LITHO</p>
@@ -93,79 +95,75 @@
                     </div>
                 </div>
             </div>
+            <span class="leftarrow" id="leftslide"  onclick="performShowHideFunction()">&#10094;</span>
+	        <span class="rightarrow" id="rightslide" onclick="performShowHideFunctionZero()">&#10095;</span>
         </section>
-        <span class="leftarrow" id="leftslide" >&#10094;</span>
-	<span class="rightarrow" id="rightslide">&#10095;</span>
+        <section class="dummy">
+            <img src="bg-cover.png" alt="" style="height:100px;width:300px;">
+            <img src="wgu.png" alt="" style="height:100px;width: 300px;">
+            <img src="wp6.png" alt="" style="height:100px;width: 300px;">
+            <img src="wpf.png" alt=""style="height:100px;width: 300px;">
+        </section>
     </div>
-<script>
-	let imageContainers = document.querySelectorAll('.imageContainer');
-    let leftarrow = document.getElementById('leftslide');
-    let rightarrow =document.getElementById('rightslide');
-    let firstcontainer = document.getElementById('one');
-    let secondcontainer = document.getElementById('two');
-    let thirdcontainer = document.getElementById('three');
-	for(let i=0;i<imageContainers.length;i++){
-   	imageContainers[i].addEventListener('click',function(event){
-          var divElement = event.target;
-          //divElement.classList.remove('imageContainer');
-           divElement.classList.add('element');
-          //divElement.classList.toggle('element');
-        if(i==0){
-		    imageContainers[1].classList.remove('element');
-	        imageContainers[2].classList.remove('element');
-            leftarrow.style.display="none";
-            rightarrow.style.display="";
-
-	    }
-         if(i==1){
-		    imageContainers[0].classList.remove('element');
-	        imageContainers[2].classList.remove('element');
-            leftarrow.style.display="";
-            rightarrow.style.display="";  
-        }
-	    if(i==2){
-		    imageContainers[0].classList.remove('element');
-	        imageContainers[1].classList.remove('element');
-            leftarrow.style.display="";
-            rightarrow.style.display="none";
-	    }
-    });
-};
-    
-    leftarrow.addEventListener('click',()=>{
-        let containerforimg = document.getElementsByClassName('element');
-        console.log(containerforimg);
-        if(containerforimg.length >0){
-            let elementvariable =containerforimg[0].previousElementSibling;
-            console.log(elementvariable);
-            console.log(elementvariable.id);
-            containerforimg[0].classList.remove('element');
-            elementvariable.classList.add('element');
-            rightarrow.style.display="";
-            leftarrow.style.display = "";
-            if(containerforimg[0].getAttribute('id')=='one'){
-                leftarrow.style.display="none";
+    <script>
+        let startX = 0;
+        let startY = 0; 
+        let endX = 0;
+        let endY = 0;
+        let distX=0;
+        let distY=0;
+        function performShowHideFunctionZero(){
+            console.log("left swipe detected...");
+            let imagecont = document.querySelector('.active');
+            imagecont.nextElementSibling.classList.add('active');
+            imagecont.classList.remove('active');
+            document.getElementById('leftslide').style.display="block";
+            isEndOfImages = imagecont.nextElementSibling.nextElementSibling;
+            if(isEndOfImages == null){
+                document.getElementById('rightslide').style.display="none";
             }
         }
-    });
-    
-    rightarrow.addEventListener('click',()=>{
-        let containerforimg = document.getElementsByClassName('element');
-        console.log(containerforimg);
-        if(containerforimg.length == 0){
-            firstcontainer.classList.add('element');
-            leftarrow.style.display = "none";
-        }
-        else{
-            containerforimg[0].nextElementSibling.classList.add('element');
-            containerforimg[0].classList.remove('element');
-            rightarrow.style.display="";
-            leftarrow.style.display = "";
-            if(containerforimg[0].getAttribute('id')=='three'){
-                rightarrow.style.display="none";
+        function performShowHideFunction(){
+            console.log("right swipe detected...");
+            let imagecont = document.querySelector('.active');
+            imagecont.previousElementSibling.classList.add('active');
+            imagecont.classList.remove('active');
+            document.getElementById('rightslide').style.display="block";
+            isEndOfImages = imagecont.previousElementSibling.previousElementSibling;
+            if(isEndOfImages== null){
+                document.getElementById('leftslide').style.display="none";
             }
         }
-    });
-</script>
+        window.addEventListener('load',function(){
+            document.querySelector('.lowersectionCls').addEventListener('touchstart',function(ev){
+            //ev.preventDefault();
+            startX = ev.changedTouches[0].clientX;
+            startY = ev.changedTouches[0].clientY;
+            console.log("touch event stated at "+'<>>'+startX+'<>>>>>>'+startY);
+        });
+        document.querySelector('.lowersectionCls').addEventListener('touchmove',function(ev){
+           // ev.preventDefault();
+            console.log('x:'+ev.changedTouches[0].clientX+'and y:'+ev.changedTouches[0].clientY);
+        });
+        document.querySelector('.lowersectionCls').addEventListener('touchend',function(ev){
+            //ev.preventDefault();
+            endX=ev.changedTouches[0].clientX;
+            endY=ev.changedTouches[0].clientY;
+            console.log("touch event ended at"+endX+'<<>>>>'+endY);
+            distX =parseInt(startX - endX);
+            distY =parseInt(startY-endY);
+            console.log("distx:"+distX+" distY:"+distY);
+           if(distX != 0 && distY !=0 && distY > -20 && distY < 20){
+             if(distX < 0){
+                performShowHideFunctionZero();
+             }
+             else{
+                performShowHideFunction();
+             }
+           }
+        });
+        });
+        
+    </script>
 </body>
 </html>
